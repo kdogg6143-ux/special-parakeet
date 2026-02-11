@@ -14,20 +14,30 @@
         body {
             font-family: 'Georgia', serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
             position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .container {
             text-align: center;
             color: white;
             z-index: 10;
-            padding: 20px;
+            padding: 40px 20px;
             animation: fadeIn 2s ease-in;
+            width: 100%;
         }
 
         h1 {
@@ -68,12 +78,13 @@
         }
 
         #yesBtn {
-            background: #ff69b4;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
             color: white;
         }
 
         #yesBtn:hover {
             transform: scale(1.1);
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
         }
 
         #noBtn {
@@ -97,6 +108,227 @@
             animation: fadeIn 1s ease-in;
         }
 
+        .reveal-container {
+            display: none;
+            margin-top: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reveal-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+        }
+
+        .reveal-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.02) translateY(0);
+        }
+
+        .hint {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .hint-text {
+            font-size: 1.3em;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 10px;
+        }
+
+        .reveal-text {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+            display: none;
+            margin-top: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .reveal-card.revealed .hint-text {
+            opacity: 0.6;
+            font-size: 1em;
+        }
+
+        .reveal-card.revealed .reveal-text {
+            display: block;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        .timeline-connector {
+            text-align: center;
+            font-size: 2em;
+            margin: 10px 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .timeline-connector.show {
+            opacity: 1;
+        }
+
+        .final-message {
+            font-size: 1.8em;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 105, 180, 0.3);
+            border-radius: 15px;
+            display: none;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            font-size: 2em;
+            pointer-events: none;
+            z-index: 1000;
+            animation: floatUp 4s ease-in forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #fff, #ff69b4);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkleAnim 1.5s ease-out forwards;
+            box-shadow: 0 0 10px #fff;
+        }
+
+        @keyframes sparkleAnim {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2) translate(var(--tx), var(--ty)) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            font-size: 1.5em;
+            animation: particleFloat 2s ease-out forwards;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translate(0, 0) scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--px), var(--py)) scale(1.5) rotate(var(--r));
+                opacity: 0;
+            }
+        }
+
+        .countdown {
+            font-size: 1.2em;
+            margin-top: 30px;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            display: inline-block;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .countdown-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ff69b4;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        .yes-btn-glow {
+            animation: glowPulse 2s infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3), 0 0 20px rgba(255,105,180,0.5);
+            }
+            50% {
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3), 0 0 40px rgba(255,105,180,0.9);
+            }
+        }
+
+        .reveal-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reveal-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+        }
+
+        .reveal-card:hover::before {
+            left: 100%;
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
         @media (max-width: 600px) {
             h1 {
                 font-size: 2em;
@@ -107,6 +339,30 @@
             button {
                 padding: 12px 30px;
                 font-size: 1.1em;
+            }
+            .reveal-container {
+                padding: 0 15px;
+                max-width: 100%;
+            }
+            .reveal-card {
+                padding: 20px;
+                margin: 15px 0;
+            }
+            .hint {
+                font-size: 2.5em;
+            }
+            .hint-text {
+                font-size: 1.1em;
+            }
+            .reveal-text {
+                font-size: 1.2em;
+            }
+            .final-message {
+                font-size: 1.4em;
+                padding: 15px;
+            }
+            .celebration {
+                font-size: 1.5em;
             }
         }
 
@@ -184,6 +440,41 @@
         <div class="celebration" id="celebration">
             🎉 You've made me the happiest! 🎉
         </div>
+        
+        <div class="countdown" id="countdown" style="display: none;">
+            <div>Our Valentine's Date in</div>
+            <div class="countdown-number" id="countdownNumber">0</div>
+            <div>days 💕</div>
+        </div>
+        
+        <div class="reveal-container" id="revealContainer">
+            <div class="reveal-card" id="card1">
+                <div class="hint">💍</div>
+                <div class="hint-text">"Two hands, one creation, a symbol that lasts forever..."</div>
+                <div class="reveal-text">Ring Making Together ✨</div>
+            </div>
+            
+            <div class="timeline-connector" id="connector1">↓</div>
+            
+            <div class="reveal-card" id="card2">
+                <div class="hint">🕯️🎻</div>
+                <div class="hint-text">"Where flames dance and melodies fill the air..."</div>
+                <div class="reveal-text">Candlelight Concert by Fever 🎶</div>
+            </div>
+            
+            <div class="timeline-connector" id="connector2">↓</div>
+            
+            <div class="reveal-card" id="card3">
+                <div class="hint">🍽️✨</div>
+                <div class="hint-text">"A table for two, where every bite is a celebration..."</div>
+                <div class="reveal-text">Romantic Dinner 🌹</div>
+            </div>
+            
+            <div class="final-message" id="finalMessage">
+                💜 A day crafted just for us 💜
+            </div>
+        </div>
+        
         <div class="rose">🌹</div>
     </div>
 
@@ -193,8 +484,96 @@
         const celebration = document.getElementById('celebration');
         const bgMusic = document.getElementById('bgMusic');
 
+        // Add glow to Yes button
+        yesBtn.classList.add('yes-btn-glow');
+
+        // Floating hearts on mouse move
+        let heartTimeout;
+        document.addEventListener('mousemove', (e) => {
+            clearTimeout(heartTimeout);
+            heartTimeout = setTimeout(() => {
+                if (Math.random() > 0.7) {
+                    createFloatingHeart(e.clientX, e.clientY);
+                }
+            }, 100);
+        });
+
+        function createFloatingHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.className = 'floating-hearts';
+            heart.textContent = ['💕', '💖', '💗', '💓', '💝'][Math.floor(Math.random() * 5)];
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
+
+        function createSparkles(element) {
+            const rect = element.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            for (let i = 0; i < 40; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                const angle = (Math.PI * 2 * i) / 40;
+                const distance = 80 + Math.random() * 80;
+                sparkle.style.left = centerX + 'px';
+                sparkle.style.top = centerY + 'px';
+                sparkle.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+                sparkle.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+                document.body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 1500);
+            }
+        }
+
+        function createParticles(element) {
+            const rect = element.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const emojis = ['💕', '💖', '💗', '💓', '💝', '✨', '⭐', '🌟', '💫'];
+            
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                particle.style.left = centerX + 'px';
+                particle.style.top = centerY + 'px';
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 100 + Math.random() * 150;
+                particle.style.setProperty('--px', Math.cos(angle) * distance + 'px');
+                particle.style.setProperty('--py', Math.sin(angle) * distance + 'px');
+                particle.style.setProperty('--r', (Math.random() - 0.5) * 720 + 'deg');
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 2000);
+            }
+        }
+
+        function typeWriter(element, text, speed = 50) {
+            element.textContent = '';
+            element.style.display = 'block';
+            let i = 0;
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        function calculateCountdown(targetDate) {
+            const now = new Date();
+            const target = new Date(targetDate);
+            const diff = target - now;
+            const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+            return days > 0 ? days : 0;
+        }
+
         let noClickCount = 0;
-        const noMessages = ['No', 'Are you sure?', 'Really? 🥺', 'Please reconsider?', 'Think again! 💔', 'Last chance! 😢'];
+        const noMessages = ['No', 'Are you sure?', 'Really? 🥺', 'Please reconsider?', 'Think again! 💔', 'Last chance! 😢', 'Pretty please? 🥹', 'Come on! 💕', 'Just say yes! 😊'];
 
         function moveNoButton() {
             const maxX = window.innerWidth - noBtn.offsetWidth - 40;
@@ -208,12 +587,21 @@
 
             // Shrink button and change text
             noClickCount++;
-            const newSize = Math.max(0.5, 1 - (noClickCount * 0.15));
+            const newSize = Math.max(0.3, 1 - (noClickCount * 0.1));
             noBtn.style.transform = `scale(${newSize})`;
             
+            // Cycle through messages, then pick random ones after first cycle
+            let messageIndex;
             if (noClickCount < noMessages.length) {
-                noBtn.textContent = noMessages[noClickCount];
+                messageIndex = noClickCount;
+            } else {
+                messageIndex = Math.floor(Math.random() * (noMessages.length - 1)) + 1;
             }
+            noBtn.textContent = noMessages[messageIndex];
+
+            // Make Yes button bigger and more attractive
+            const yesSize = 1 + (noClickCount * 0.05);
+            yesBtn.style.transform = `scale(${Math.min(yesSize, 1.5)})`;
         }
 
         function createConfetti() {
@@ -240,10 +628,85 @@
         });
 
         yesBtn.addEventListener('click', () => {
+            createSparkles(yesBtn);
+            createParticles(yesBtn);
             celebration.style.display = 'block';
             noBtn.style.display = 'none';
+            yesBtn.style.display = 'none';
             createConfetti();
             bgMusic.play();
+            
+            // Show countdown (set your Valentine's date here - format: 'YYYY-MM-DD')
+            const valentineDate = '2026-02-14'; // Change this to your actual date
+            const daysLeft = calculateCountdown(valentineDate);
+            document.getElementById('countdownNumber').textContent = daysLeft;
+            document.getElementById('countdown').style.display = 'inline-block';
+            
+            // Extra confetti bursts
+            setTimeout(() => createConfetti(), 500);
+            setTimeout(() => createConfetti(), 1000);
+            
+            setTimeout(() => {
+                celebration.style.display = 'none';
+                document.getElementById('revealContainer').style.display = 'block';
+                
+                setTimeout(() => {
+                    document.getElementById('card1').classList.add('show');
+                }, 300);
+                
+                setTimeout(() => {
+                    document.getElementById('connector1').classList.add('show');
+                }, 1200);
+                
+                setTimeout(() => {
+                    document.getElementById('card2').classList.add('show');
+                }, 1500);
+                
+                setTimeout(() => {
+                    document.getElementById('connector2').classList.add('show');
+                }, 2400);
+                
+                setTimeout(() => {
+                    document.getElementById('card3').classList.add('show');
+                }, 2700);
+            }, 2500);
+        });
+
+        // Click to reveal each card with sparkles
+        document.getElementById('card1').addEventListener('click', function() {
+            if (!this.classList.contains('revealed')) {
+                createSparkles(this);
+                createParticles(this);
+                this.classList.add('revealed');
+            }
+        });
+        
+        document.getElementById('card2').addEventListener('click', function() {
+            if (!this.classList.contains('revealed')) {
+                createSparkles(this);
+                createParticles(this);
+                this.classList.add('revealed');
+            }
+        });
+        
+        document.getElementById('card3').addEventListener('click', function() {
+            if (!this.classList.contains('revealed')) {
+                createSparkles(this);
+                createParticles(this);
+                this.classList.add('revealed');
+                setTimeout(() => {
+                    const finalMsg = document.getElementById('finalMessage');
+                    typeWriter(finalMsg, '💜 A day crafted just for us 💜', 80);
+                    // Create heart burst
+                    for (let i = 0; i < 30; i++) {
+                        setTimeout(() => {
+                            const x = window.innerWidth / 2 + (Math.random() - 0.5) * 200;
+                            const y = window.innerHeight / 2 + (Math.random() - 0.5) * 200;
+                            createFloatingHeart(x, y);
+                        }, i * 50);
+                    }
+                }, 800);
+            }
         });
 
         for (let i = 0; i < 15; i++) {
